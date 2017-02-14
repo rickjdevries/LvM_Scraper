@@ -3,6 +3,8 @@ from datetime import datetime
 import requests
 import feedparser
 
+#TEST
+
 def ZiggoDomeLoader():
     import locale
     locale.setlocale(locale.LC_ALL,'nl_NL.UTF-8')#Dutch
