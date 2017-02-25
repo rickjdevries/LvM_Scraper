@@ -2,7 +2,9 @@ from datetime import datetime
 from bs4      import BeautifulSoup
 import ssl, locale, feedparser
 
-def ParadisoLoader(URL):
+def ParadisoLoader():
+    URL = 'https://www.paradiso.nl/rss.xml'
+
     if hasattr(ssl, '_create_unverified_context'):
         ssl._create_default_https_context = ssl._create_unverified_context
         
@@ -17,8 +19,10 @@ def ParadisoLoader(URL):
 
     for event in feed['entries']:
         info       = event['title'].split(' - ')
-        date_time  = datetime.strptime(info[0],'%A %d %B %Y %H:%M')
-    
+        try:
+            date_time  = datetime.strptime(info[0],'%A %d %B %Y %H:%M')
+        except:
+            date_time  = datetime.strptime(info[0]+' 00:00','%A %d %B %Y %H:%M')
         container.append([info[1],date_time.date(),date_time.time(),event['link']])
     
     try: #Rick

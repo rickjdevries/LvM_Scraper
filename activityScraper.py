@@ -1,11 +1,13 @@
-from Venues.Paradiso import ParadisoLoader
-from Venues.Paard    import PaardLoader
+from Venues.Paradiso  import ParadisoLoader
+from Venues.Paard     import PaardLoader
 from Venues.ZiggoDome import ZiggoDomeLoader
+from Venues.AFASLive  import AFASLiveLoader
 
 #Call functions to parse the RSS feeds
-paard_container     = PaardLoader('http://www.paard.nl/programme/rss/lang/nl')
-paradiso_container  = ParadisoLoader('https://www.paradiso.nl/rss.xml')
+AFAS_container      = AFASLiveLoader()
+paard_container     = PaardLoader()
+paradiso_container  = ParadisoLoader()
 ziggodome_container = ZiggoDomeLoader()
 
 #print numbers
-print(len(paard_container),len(paradiso_container),len(ziggodome_container))
+print(len(AFAS_container),len(paard_container),len(paradiso_container),len(ziggodome_container))

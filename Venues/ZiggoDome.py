@@ -3,7 +3,6 @@ from bs4      import BeautifulSoup
 import locale, requests
 
 def ZiggoDomeLoader():
-    import locale
     try: #Rick
         locale.setlocale(locale.LC_ALL,'nl_NL.UTF-8')#Dutch
     except: #Sander
