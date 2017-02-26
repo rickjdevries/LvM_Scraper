@@ -17,6 +17,10 @@ from django.conf.urls import include,url
 from django.contrib import admin
 
 urlpatterns = [
+    url(r'^', include('mainpage.urls')),
     url(r'^eventscraper/', include('eventscraper.urls')),
     url(r'^admin/', admin.site.urls),
+    
+    url('^', include('django.contrib.auth.urls')),
+	url(r'^login/', include('mainpage.urls')),
 ]
