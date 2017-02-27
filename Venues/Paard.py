@@ -1,7 +1,9 @@
 from datetime import datetime
 import feedparser
 
-def PaardLoader(URL):
+def PaardLoader():
+    URL = 'http://www.paard.nl/programme/rss/lang/nl'
+
     feed = feedparser.parse(URL)
     container = []
     #Loop over the events
