@@ -19,16 +19,19 @@ def ZiggoDomeLoader():
 
         url = link['href']
         #open the event page
-        event_data = BeautifulSoup(requests.get(url).content,"html.parser").find('div',attrs={'class':'titlebar'})
+        event_data = BeautifulSoup(requests.get(url).content,"html.parser")
         
-        date  = event_data.find('h2',attrs={'class':'event_date'}).text
-        date_time  = datetime.strptime(date.strip(),'%A %d %B %Y')
+        raw_date  = event_data.find('div',attrs={'class':'titlebar'}).find('h2',attrs={'class':'event_date'}).text.strip()
+        raw_time  = event_data.find('script',attrs={'id':'timetable'}) #script id="timetable"
         
-        #TODO: Abstract starting time from event page
+        #Final data
+        title = event_data.find('h1',attrs={'class':'event_title'}).text
+        date  = datetime.strptime(raw_date,'%A %d %B %Y').date()
+        time  = None
 
-        container.append([event_data.find('h1',attrs={'class':'event_title'}).text,
-                          date_time.date(),
-                          'time',
+        container.append([title,
+                          date,
+                          time,
                           url])
 
     try: #Rick
