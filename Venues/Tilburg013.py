@@ -13,23 +13,18 @@ def Tilburg013Loader():
    
     #Scrape the main site for links to events
     for link in BeautifulSoup(requests.get(URL).content,"html.parser").find('div',attrs={'class':'event-overview'}).findAll('a',href=True):
-        #Abstract some information
-        #event_date = link.find('span',attrs={'class':'event_date'}).text
-        #event_act = link.find('span',attrs={'class':'event_act'}).text
+        #Compose the hyperlinks
+        url = 'http://www.013.nl' + link['href']
+                
+        title     = link.find('span',attrs={'class':'event__act'}).text
+        date_raw  = link.find('span',attrs={'class':'event__date'}).text.replace("'", "")
+        time_raw  = link.find('div',attrs={'class':'event__meta'}).text.strip()[8:13]
 
-        url = link['href']
-        #combine the hyperlinks
-        url = 'http://www.013.nl' + url
-        #print(url)
+        date_time  = datetime.strptime(date_raw + ' ' + time_raw,'%a  %d %b %y %H:%M')
+        date = date_time.date()
+        time = date_time.time()
         
-        ##open the event page
-        event_data = BeautifulSoup(requests.get(url).content,"html.parser").find('div',attrs={'class':'spotlight'})
-        
-        title = event_data.find('h1',attrs={'class':'spotlight__title title--alpha'}).text
-        date  = event_data.find('span',attrs={'class':'spotlight__date'}).text
-        #date_time  = datetime.strptime(date.strip(),'%A %d %B %Y')
-        
-        container.append([title, date])          
+        container.append([title,date,time,url])      
                           
     try: #Rick
         locale.setlocale(locale.LC_ALL,'en_US.UTF-8')#English US

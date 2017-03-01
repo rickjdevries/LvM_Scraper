@@ -23,7 +23,13 @@ def ParadisoLoader():
             date_time  = datetime.strptime(info[0],'%A %d %B %Y %H:%M')
         except:
             date_time  = datetime.strptime(info[0]+' 00:00','%A %d %B %Y %H:%M')
-        container.append([info[1],date_time.date(),date_time.time(),event['link']])
+        
+        title = info[1]
+        date  = date_time.date()
+        time  = date_time.time()
+        url   = event['link']
+        
+        container.append([title,date,time,url])
     
     try: #Rick
         locale.setlocale(locale.LC_ALL,'en_US.UTF-8')#English US
