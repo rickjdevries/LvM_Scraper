@@ -14,9 +14,10 @@ def AFASLiveLoader():
     for event in BeautifulSoup(requests.get(URL).content,"html.parser").findAll('figure',attrs={'data-bg-color':'#005FAA'}):
         date = event.find('time').text[2:]
         try:
-            time = event.find('div',attrs={'class':'times'}).find('span').text.replace(' uur','')
+            time = event.find('div',attrs={'class':'times'}).find('span').text.replace(' uur','').strip()
         except:
             pass
+            
         date_time  = datetime.strptime(date+' '+time,'%A %d %B %Y %H:%M')
 
         container.append([event.find('h3',attrs={'class':'eventTitle hide-for-small-only'}).text,
