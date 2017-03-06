@@ -34,6 +34,7 @@ def ZiggoDomeLoader():
             indices = [i for i, s in enumerate(time_data) if 'Start' in s or 'Aanvang' in s]
             if indices:
                 time = datetime.strptime(time_data[max(indices)-1],'%H:%M').time()
+                
         container.append([title,
                           date,
                           time,
