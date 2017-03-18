@@ -34,5 +34,3 @@ def LuxorLiveLoader():
     except: #Sander
         locale.setlocale(locale.LC_ALL,'English_United States.1252')#English US
     return container
-        
-LuxorLiveLoader()

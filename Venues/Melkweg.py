@@ -3,11 +3,6 @@ from bs4      import BeautifulSoup
 import locale, requests, re
 
 def MelkwegLoader():
-    try: #Rick
-        locale.setlocale(locale.LC_ALL,'nl_NL.UTF-8')#Dutch
-    except: #Sander
-        locale.setlocale(locale.LC_ALL,'Dutch_Netherlands.1252')#Dutch
-
     URL = 'https://www.melkweg.nl/nl/agenda/'
     container = []
         

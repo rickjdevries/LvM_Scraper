@@ -12,18 +12,23 @@ def AFASLiveLoader():
     container = []
     
     for event in BeautifulSoup(requests.get(URL).content,"html.parser").findAll('figure',attrs={'data-bg-color':'#005FAA'}):
-        date = event.find('time').text[2:]
+        title    = event.find('h3',attrs={'class':'eventTitle hide-for-small-only'}).text
+        url      = event.find('a')['href']
+        raw_date = event.find('time').text[2:]
         try:
-            time = event.find('div',attrs={'class':'times'}).find('span').text.replace(' uur','').strip()
-        except:
-            pass
+            time      = event.find('div',attrs={'class':'times'}).find('span').text.replace(' uur','').strip()
+            date_time = datetime.strptime(raw_date+' '+time,'%A %d %B %Y %H:%M')
+            date      = date_time.date()
+            time      = date_time.time()
             
-        date_time  = datetime.strptime(date+' '+time,'%A %d %B %Y %H:%M')
+        except:
+            date = datetime.strptime(raw_date,'%A %d %B %Y')
+            time = None
 
-        container.append([event.find('h3',attrs={'class':'eventTitle hide-for-small-only'}).text,
-                          date_time.date(),
-                          date_time.time(),
-                          event.find('a')['href']]
+        container.append([title,
+                          date,
+                          time,
+                          url]
         )
         
     try: #Rick
