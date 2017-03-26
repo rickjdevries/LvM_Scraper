@@ -4,27 +4,25 @@
 {% block title %}Event List{% endblock %}
 
 {% block content %}
-	
-<div class="col-md-10">
-	<h1>Event List</h1>
-    
-    <div class="row table-header-row">
-        <div class="col-xs-2">Venue</div>
-        <div class="col-xs-6">Show Title</div>
-        <div class="col-xs-2">Date</div>
-        <div class="col-xs-1">Time</div>
-        <div class="col-xs-1">URL</div>
-	</div>
-    
-	{%for event in event_list%}
-        <div class="row table-row">
-            <div class="col-xs-2">{{ event.venue }}</div>
-            <div class="col-xs-6">{{ event.title }}</div>
-            <div class="col-xs-2">{{ event.date }}</div>
-            <div class="col-xs-1">{{ event.time }}</div>
-            <div class="col-xs-1"><a href=" {{ event.URL }}" target="_blank">Link</a></div>
+    <div class="col-md-10">
+        <h1>Event List</h1>
+        
+        <div class="row table-header-row">
+            <div class="col-xs-2">Venue</div>
+            <div class="col-xs-6">Show Title</div>
+            <div class="col-xs-2">Date</div>
+            <div class="col-xs-1">Time</div>
+            <div class="col-xs-1">URL</div>
         </div>
-    {% endfor %}
-</div>
-
+        
+        {%for event in event_list%}
+            <div class="row table-row">
+                <div class="col-xs-2">{{ event.venue }}</div>
+                <div class="col-xs-6">{{ event.title }}</div>
+                <div class="col-xs-2">{{ event.date }}</div>
+                <div class="col-xs-1">{{ event.time }}</div>
+                <div class="col-xs-1"><a href=" {{ event.URL }}" target="_blank">Link</a></div>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}
