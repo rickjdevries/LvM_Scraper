@@ -14,22 +14,26 @@ def AFASLiveLoader():
     for event in BeautifulSoup(requests.get(URL).content,"html.parser").findAll('figure',attrs={'data-bg-color':'#005FAA'}):
         title    = event.find('h3',attrs={'class':'eventTitle hide-for-small-only'}).text
         url      = event.find('a')['href']
-        raw_date = event.find('time').text[2:]
-        try:
-            time      = event.find('div',attrs={'class':'times'}).find('span').text.replace(' uur','').strip()
-            date_time = datetime.strptime(raw_date+' '+time,'%A %d %B %Y %H:%M')
-            date      = date_time.date()
-            time      = date_time.time()
-            
-        except:
-            date = datetime.strptime(raw_date,'%A %d %B %Y').date()
-            time = None
+        
+        #If not a private event
+        if url != '/zakelijk' and title != 'Productiedag':
+            raw_date = event.find('time').text[2:]
+            try:
+                time      = event.find('div',attrs={'class':'times'}).find('span').text.replace(' uur','').strip()
+                date_time = datetime.strptime(raw_date+' '+time,'%A %d %B %Y %H:%M')
+                date      = date_time.date()
+                time      = date_time.time()
+                
+            except:
+                date = datetime.strptime(raw_date,'%A %d %B %Y').date()
+                time = None
 
-        container.append([title,
-                          date,
-                          time,
-                          url]
-        )
+        
+            container.append([title,
+                              date,
+                              time,
+                              url]
+            )
         
     try: #Rick
         locale.setlocale(locale.LC_ALL,'en_US.UTF-8')#English US

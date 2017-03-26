@@ -17,12 +17,13 @@ def LuxorLiveLoader():
         url      = link.find('a')['href']
         raw_date = link.find('meta',attrs={'itemprop':'startDate'})['content'].split('+')
         
-        date = datetime.strptime(raw_date[0] + '+' + raw_date[-1].replace(':',''),'%Y-%m-%dT%H:%M:%S%z').date()
-        time = None
+        date_time = datetime.strptime(raw_date[0] + '+' + raw_date[-1].replace(':',''),'%Y-%m-%dT%H:%M:%S%z')
+        date     = date_time.date()
+        time     = date_time.time()
 
-        for entry in link.find('ul').findAll('li'):
-            if 'start' in str(entry):
-                time = datetime.strptime(str(entry).split('start ',1)[1][:5],'%H:%M').time()
+        # for entry in link.find('ul').findAll('li'):
+            # if 'start' in str(entry):
+                # time = datetime.strptime(str(entry).split('start ',1)[1][:5],'%H:%M').time()
         
         container.append([title,
                           date,
