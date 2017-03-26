@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_crontab',
 ]
 
 MIDDLEWARE = [
@@ -101,6 +102,14 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+CRON_CLASSES = [
+    "eventscraper.cron.MyCronJob",
+    # ...
+]
+
+CRONJOBS = [
+('*/1 * * * *', 'eventscraper.cron.cron_job')
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/

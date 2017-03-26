@@ -22,7 +22,7 @@ def AFASLiveLoader():
             time      = date_time.time()
             
         except:
-            date = datetime.strptime(raw_date,'%A %d %B %Y')
+            date = datetime.strptime(raw_date,'%A %d %B %Y').date()
             time = None
 
         container.append([title,
