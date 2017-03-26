@@ -17,7 +17,7 @@ def LuxorLiveLoader():
         url      = link.find('a')['href']
         raw_date = link.find('meta',attrs={'itemprop':'startDate'})['content'].split('+')
         
-        date = datetime.strptime(raw_date[0] + '+' + raw_date[-1].replace(':',''),'%Y-%m-%dT%H:%M:%S%z')
+        date = datetime.strptime(raw_date[0] + '+' + raw_date[-1].replace(':',''),'%Y-%m-%dT%H:%M:%S%z').date()
         time = None
 
         for entry in link.find('ul').findAll('li'):
