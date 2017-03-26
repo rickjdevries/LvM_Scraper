@@ -1,10 +1,19 @@
-from django.http import HttpResponse
+from django.shortcuts     import render
+from django.views.generic import View, ListView
+from .models              import Event
+from .scripts             import import_file
+   
+# class Index(View):
+    # def get(self, request, *args, **kwargs):
+        # show_text = "Soon this will be the Event Scraper page!!"
+        # return render(request,'eventscraper/events.html')
 
-def index(request):
-    return HttpResponse("Hello, world. You're at the index.")
+class EventListView(ListView):
+    model         = Event
+    template_name = 'eventscraper/event_list.html'
+    ordering      = 'date'
     
-from django.shortcuts import render
-
-def index(request):
-	show_text = "Soon this will be the Event Scraper page!!"
-	return render(request,'eventscraper/events.html')
+    def get_context_data(self, **kwargs):
+        context = super(EventListView, self).get_context_data(**kwargs)
+        # import_file('C:/Users/svanl/Dropbox/Python and Django Tools/LvM_Scraper/events.csv')
+        return context

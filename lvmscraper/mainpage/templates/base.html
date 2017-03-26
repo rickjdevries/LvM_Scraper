@@ -31,7 +31,7 @@
           <ul class="nav navbar-nav">
             <li><a href="{% url 'mainpage:index' %}">Home</a></li>
             {% if user.is_authenticated %}
-            <li><a href="{% url 'event_scraper:index' %}">Event Scraper</a></li>
+            <li><a href="{% url 'event_scraper:event_list' %}">Events</a></li>
             {% endif %}
           </ul>
           <ul class="nav navbar-nav navbar-right">
