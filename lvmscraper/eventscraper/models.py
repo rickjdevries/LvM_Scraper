@@ -4,5 +4,9 @@ class Event(models.Model):
     venue = models.CharField(max_length=30)
     title = models.CharField(max_length=30)
     date  = models.DateField()
-    time  = models.CharField(max_length=30)
+    time  = models.CharField(max_length=30,null=True)
     URL   = models.CharField(max_length=80)
+
+    def __str__(self):
+        #Object name that is displayed in admin
+        return self.title

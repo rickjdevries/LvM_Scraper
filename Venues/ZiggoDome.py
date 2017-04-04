@@ -31,7 +31,7 @@ def ZiggoDomeLoader():
         time_data = re.findall('<td>([a-zA-Z0-9.:&_ -]+)</td>',str(raw_time))
              
         if time_data:
-            indices = [i for i, s in enumerate(time_data) if 'Start' in s or 'Aanvang' in s]
+            indices = [i for i, s in enumerate(time_data) if 'Start' in s or 'Aanvang' in s or title in s]
             if indices:
                 time = datetime.strptime(time_data[max(indices)-1],'%H:%M').time()
                 

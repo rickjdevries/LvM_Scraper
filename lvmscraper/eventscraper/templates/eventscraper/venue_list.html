@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Event List{% endblock %}
+
+{% block content %}
+    <div class="col-md-10">
+        <h1>Venue List</h1>
+        
+        <div class="row table-header-row">
+            <div class="col-xs-4">Venue</div>
+        </div>
+        
+        {%for venue in venue_list%}
+            <div class="row table-row">
+                <div class="col-xs-4"><a href="{% url 'event_scraper:venue_list' venue.venue %}">{{ venue.venue }}</a></div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
