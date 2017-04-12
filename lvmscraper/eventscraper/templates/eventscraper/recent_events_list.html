@@ -5,25 +5,23 @@
 
 {% block content %}
     <div class="col-md-12">
-        <h1>Event List</h1>
+        <h1>Recently Added Events</h1>
         
         <div class="row table-header-row">
-            <div class="col-xs-2">Venue</div>
-            <div class="col-xs-4">Show Title</div>
-            <div class="col-xs-2">Date</div>
             <div class="col-xs-2">Date Added</div>
-            <div class="col-xs-1">Time</div>
-            <div class="col-xs-1">URL</div>
+            <div class="col-xs-4">Show Title</div>
+            <div class="col-xs-2">Venue</div>
+            <div class="col-xs-2">Date</div>
+            <div class="col-xs-2">Time</div>
         </div>
         
         {%for event in event_list%}
             <div class="row table-row">
-                <div class="col-xs-2"><a href="{% url 'event_scraper:venue_list' event.venue %}">{{ event.venue }}</a></div>
-                <div class="col-xs-4">{{ event.title|truncatechars:65 }}</div>
-                <div class="col-xs-2">{{ event.date }}</div>
                 <div class="col-xs-2">{{ event.date_added }}</div>
-                <div class="col-xs-1">{{ event.time }}</div>
-                <div class="col-xs-1"><a href=" {{ event.URL }}" target="_blank">Link</a></div>
+                <div class="col-xs-4"><a href=" {{ event.URL }}" target="_blank">{{ event.title|truncatechars:65 }}</a></div>
+                <div class="col-xs-2"><a href="{% url 'event_scraper:venue_list' event.venue %}">{{ event.venue }}</a></div>
+                <div class="col-xs-2">{{ event.date }}</div>
+                <div class="col-xs-2">{{ event.time }}</div>
             </div>
         {% endfor %}
     </div>
