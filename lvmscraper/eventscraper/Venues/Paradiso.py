@@ -12,10 +12,7 @@ def ParadisoLoader():
     container = []
     #Loop over the events
 
-    try: #Rick
-        locale.setlocale(locale.LC_ALL,'nl_NL.UTF-8')#Dutch
-    except: #Sander
-        locale.setlocale(locale.LC_ALL,'Dutch_Netherlands.1252')#Dutch
+    locale.setlocale(locale.LC_ALL,'nl_NL.UTF-8')#Dutch
 
     for event in feed['entries']:
         info       = event['title'].split(' - ')
@@ -31,8 +28,6 @@ def ParadisoLoader():
         
         container.append([title,date,time,url])
     
-    try: #Rick
-        locale.setlocale(locale.LC_ALL,'en_US.UTF-8')#English US
-    except: #Sander
-        locale.setlocale(locale.LC_ALL,'English_United States.1252')#English US
+    locale.setlocale(locale.LC_ALL,'en_US.UTF-8')#English US
+
     return container

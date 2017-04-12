@@ -30,10 +30,16 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li><a href="{% url 'mainpage:index' %}">Home</a></li>
-            {% if user.is_authenticated %}
-            <li><a href="{% url 'event_scraper:event_list' %}">Events</a></li>
-            <li><a href="{% url 'event_scraper:venue_list_view' %}">Venues</a></li>
-            <li><a href="{% url 'event_scraper:update_database' %}">Update Database</a></li>
+            {% if user.is_authenticated %}              
+                <li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Event Scraper<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="{% url 'event_scraper:event_list' %}">Events List</a></li>
+                        <li><a href="{% url 'event_scraper:venue_list_view' %}">Venues</a></li>
+                        <li><a href="{% url 'event_scraper:added_recently' %}">Added Recently</a></li>
+                        <!-- <li><a href="{% url 'event_scraper:update_database' %}">Update Database</a></li> -->
+					</ul>
+				</li>
             {% endif %}
           </ul>
           <ul class="nav navbar-nav navbar-right">

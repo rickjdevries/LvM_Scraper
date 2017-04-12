@@ -1,34 +1,49 @@
-from django.shortcuts     import render, redirect
-from django.views.generic import View, ListView
-from .models              import Event
-from .scripts             import import_file,scrape_events
-from datetime             import date
-   
-class EventListView(ListView):
-    model         = Event
-    template_name = 'eventscraper/event_list.html'
+from django.views.generic       import View, ListView
+from django.shortcuts           import redirect
+from .models                    import Event
+from django.utils               import timezone
+from .scripts                   import scrape_events
+from django.contrib.auth.mixins import PermissionRequiredMixin
+
+class EventListView(PermissionRequiredMixin,ListView):
+    model               = Event
+    template_name       = 'eventscraper/event_list.html'
+    permission_required = ('eventscraper.view_eventscraper')
     
     def get_context_data(self, **kwargs):
         context = super(EventListView, self).get_context_data(**kwargs)
         #Only show the events from today on
-        context['event_list'] = Event.objects.filter(date__gte=date.today()).order_by('date')
+        context['event_list'] = Event.objects.filter(date__gte=timezone.now()).order_by('date')
         #Return the context
         return context
         
-class VenueView(ListView):
-    model         = Event
-    template_name = 'eventscraper/event_list.html'
+class RecentlyAddedEventsView(ListView):
+    model               = Event
+    template_name       = 'eventscraper/recent_events_list.html'
+    permission_required = ('eventscraper.view_eventscraper')
+    
+    def get_context_data(self, **kwargs):
+        context = super(RecentlyAddedEventsView, self).get_context_data(**kwargs)
+        #Only show the events from today on which were added last week
+        context['event_list'] = Event.objects.filter(date__gte=timezone.now()).filter(date_added__gt=timezone.now()-timezone.timedelta(days=7)).filter(date_added__lte=timezone.now()).order_by('-date_added','date')
+        return context
+
+class VenueView(PermissionRequiredMixin,ListView):
+    model               = Event
+    template_name       = 'eventscraper/event_list.html'
+    permission_required = ('eventscraper.view_eventscraper')
     
     def get_context_data(self, **kwargs):
         context = super(VenueView, self).get_context_data(**kwargs)
         #Only show the events from today on
-        context['event_list'] = Event.objects.filter(venue=self.kwargs['venue']).filter(date__gte=date.today()).order_by('date')
+        context['event_list'] = Event.objects.filter(venue=self.kwargs['venue']).filter(date__gte=timezone.now()).order_by('date')
         #Return the context
         return context
         
-class VenueListView(ListView):
-    model         = Event
-    template_name = 'eventscraper/venue_list.html'
+class VenueListView(PermissionRequiredMixin,ListView):
+    model               = Event
+    template_name       = 'eventscraper/venue_list.html'
+    permission_required = ('eventscraper.view_eventscraper')
     
     def get_context_data(self, **kwargs):
         context = super(VenueListView, self).get_context_data(**kwargs)
@@ -37,7 +52,9 @@ class VenueListView(ListView):
         #Return the context
         return context
         
-class UpdateDatabase(View):
+class UpdateDatabase(PermissionRequiredMixin,View):
+    permission_required = ('eventscraper.view_eventscraper')
+    
     def get(self, request, *args, **kwargs):
         #Run script for scraping events and loading it in the database
         scrape_events()

@@ -3,10 +3,7 @@ from bs4      import BeautifulSoup
 import locale, requests
 
 def Tilburg013Loader():
-    try: #Rick
-        locale.setlocale(locale.LC_ALL,'nl_NL.UTF-8')#Dutch
-    except: #Sander
-        locale.setlocale(locale.LC_ALL,'Dutch_Netherlands.1252')#Dutch
+    locale.setlocale(locale.LC_ALL,'nl_NL.UTF-8')#Dutch
 
     URL = 'http://www.013.nl/programma'
     container = []
@@ -26,9 +23,6 @@ def Tilburg013Loader():
         
         container.append([title,date,time,url])      
                           
-    try: #Rick
-        locale.setlocale(locale.LC_ALL,'en_US.UTF-8')#English US
-    except: #Sander
-        locale.setlocale(locale.LC_ALL,'English_United States.1252')#English US
+    locale.setlocale(locale.LC_ALL,'en_US.UTF-8')#English US
         
     return container

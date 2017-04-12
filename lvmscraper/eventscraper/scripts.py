@@ -17,6 +17,7 @@ def scrape_events():
     steck_container      = venues.SteckLoader()
     
     Venues = [[Boerderij_container,'Boerderij'],[AFAS_container,'AFAS Live'],[paard_container,'Paard'],[paradiso_container,'Paradiso'],[ziggodome_container,'Ziggo Dome'],[Tilburg013_container,' Tilburg 013'],[melkweg_container,'Melkweg'],[arena_container,'Arena'],[luxorlive_container,'Luxor Live'],[gelredome_container,'Gelredome'],[steck_container,'STECK']]
+    # Venues = [[Boerderij_container,'Boerderij'],[AFAS_container,'AFAS Live'],[paard_container,'Paard']]
 
     for venue in Venues:
         #Loop over the entries

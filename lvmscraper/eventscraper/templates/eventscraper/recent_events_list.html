@@ -9,8 +9,9 @@
         
         <div class="row table-header-row">
             <div class="col-xs-2">Venue</div>
-            <div class="col-xs-6">Show Title</div>
+            <div class="col-xs-4">Show Title</div>
             <div class="col-xs-2">Date</div>
+            <div class="col-xs-2">Date Added</div>
             <div class="col-xs-1">Time</div>
             <div class="col-xs-1">URL</div>
         </div>
@@ -18,8 +19,9 @@
         {%for event in event_list%}
             <div class="row table-row">
                 <div class="col-xs-2"><a href="{% url 'event_scraper:venue_list' event.venue %}">{{ event.venue }}</a></div>
-                <div class="col-xs-6">{{ event.title|truncatechars:65 }}</div>
+                <div class="col-xs-4">{{ event.title|truncatechars:65 }}</div>
                 <div class="col-xs-2">{{ event.date }}</div>
+                <div class="col-xs-2">{{ event.date_added }}</div>
                 <div class="col-xs-1">{{ event.time }}</div>
                 <div class="col-xs-1"><a href=" {{ event.URL }}" target="_blank">Link</a></div>
             </div>

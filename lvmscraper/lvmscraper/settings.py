@@ -102,13 +102,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-CRON_CLASSES = [
-    "eventscraper.cron.MyCronJob",
-    # ...
-]
+# Login
+LOGIN_REDIRECT_URL =  'mainpage:index'
+LOGIN_URL = 'login'
 
 CRONJOBS = [
-('*/1 * * * *', 'eventscraper.cron.cron_job')
+('*/1440 * * * *', 'eventscraper.scripts.scrape_events')
 ]
 
 # Internationalization
