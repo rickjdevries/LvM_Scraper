@@ -1,6 +1,23 @@
-from .models               import Event
-import eventscraper.Venues as     venues
+from django.conf            import settings
+from django.core.mail       import send_mail
+from .models                import Event
+from django.utils           import timezone
+from django.template.loader import render_to_string
+import eventscraper.Venues  as     venues
 import math
+
+def send_mailupdate():
+    event_list = Event.objects.filter(date__gte=timezone.now()).filter(date_added__gt=timezone.now()-timezone.timedelta(days=7)).filter(date_added__lte=timezone.now()).order_by('date')
+    email_body = render_to_string('eventscraper/recent_events_email.html',{'event_list':event_list})
+    
+    send_mail(
+        'Weekly Update Eventscraper :)',
+        '',
+        settings.EMAIL_HOST_USER,
+        ['svanlochem@gmail.com'],
+        fail_silently=False,
+        html_message=email_body,
+    )
        
 def scrape_events():
     #Call functions to parse the RSS feeds

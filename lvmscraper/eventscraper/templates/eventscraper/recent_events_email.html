@@ -1,0 +1,36 @@
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <style>
+            .panel-body { height:310px;}
+        </style>
+    </head>
+
+    <div class="col-md-12">
+        <h1>Events Added This Week</h1>
+               
+        <table>
+            <!-- HEADER -->
+            <tr>
+              <th>Show Title</th>
+              <th>Venue</th>
+              <th>Date</th>
+              <th>Time</th>
+            </tr>
+          
+            <!-- CONTENT -->       
+            {%for event in event_list%}
+                <tr>
+                    <td><a href=" {{ event.URL }}" target="_blank">{{ event.title|truncatechars:65 }}</a></td>
+                    <td><a href="{% url 'event_scraper:venue_list' event.venue %}">{{ event.venue }}</a></td>
+                    <td>{{ event.date }}</td>
+                    <td>{{ event.time }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</html>

@@ -8,6 +8,10 @@ __pycache__/
 local_settings.py
 migrations/
 
+# Specific files #
+##################
+lvmscraper/settings.py
+
 .env
 db.sqlite3
 
