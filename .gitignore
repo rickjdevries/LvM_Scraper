@@ -10,7 +10,7 @@ migrations/
 
 # Specific files #
 ##################
-lvmscraper/settings.py
+lvmscraper/lvmscraper/settings.py
 
 .env
 db.sqlite3
