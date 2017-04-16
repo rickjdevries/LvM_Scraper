@@ -1,10 +1,10 @@
-from django.conf            import settings
-from django.core.mail       import send_mail
-from .models                import Event
+from django.conf                import settings
+from django.core.mail           import send_mail
+from .models                    import Event
 from django.contrib.auth.models import User
-from django.utils           import timezone
-from django.template.loader import render_to_string
-import eventscraper.Venues  as     venues
+from django.utils               import timezone
+from django.template.loader     import render_to_string
+import eventscraper.Venues      as     venues
 import math
 
 def send_mailupdate():
@@ -45,15 +45,25 @@ def scrape_events():
     steck_container      = venues.SteckLoader()
     
     Venues = [[Boerderij_container,'Boerderij'],[AFAS_container,'AFAS Live'],[paard_container,'Paard'],[paradiso_container,'Paradiso'],[ziggodome_container,'Ziggo Dome'],[Tilburg013_container,' Tilburg 013'],[melkweg_container,'Melkweg'],[arena_container,'Arena'],[luxorlive_container,'Luxor Live'],[gelredome_container,'Gelredome'],[steck_container,'STECK']]
-    # Venues = [[Boerderij_container,'Boerderij'],[AFAS_container,'AFAS Live'],[paard_container,'Paard']]
 
     for venue in Venues:
         #Loop over the entries
         for entry in venue[0]:
-            Event.objects.get_or_create(
+            #Check if the url already exists in the database
+            try:
+                event = Event.objects.get(URL=entry[3])
+            except:
+                pass
+            
+            #Create a new event object in case the new data is unique
+            obj, created = Event.objects.get_or_create(
                 venue = venue[1],
                 title = entry[0],
                 date  = entry[1],
                 time  = entry[2],
                 URL   = entry[3]
             )
+            
+            #The data of the event must have been updated in case a new object was created; delete the old one
+            if created and event:
+                event.delete()
