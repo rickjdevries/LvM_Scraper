@@ -16,4 +16,5 @@ class Event(models.Model):
     class Meta:
         permissions = (
             ("view_eventscraper", "Can see eventscraper content"),
+            ("receive_emailupdates", "Will get email updates"),
         )

@@ -1,23 +1,34 @@
 from django.conf            import settings
 from django.core.mail       import send_mail
 from .models                import Event
+from django.contrib.auth.models import User
 from django.utils           import timezone
 from django.template.loader import render_to_string
 import eventscraper.Venues  as     venues
 import math
 
 def send_mailupdate():
-    event_list = Event.objects.filter(date__gte=timezone.now()).filter(date_added__gt=timezone.now()-timezone.timedelta(days=7)).filter(date_added__lte=timezone.now()).order_by('date')
-    email_body = render_to_string('eventscraper/recent_events_email.html',{'event_list':event_list})
+    #Create a list of receivers
+    receivers = []
+    for user in User.objects.all():
+        if user.has_perm('eventscraper.receive_emailupdates'):
+            receivers.append(user.email)
     
-    send_mail(
-        'Weekly Update Eventscraper :)',
-        '',
-        settings.EMAIL_HOST_USER,
-        ['svanlochem@gmail.com'],
-        fail_silently=False,
-        html_message=email_body,
-    )
+    #If there are any users that need to receive an email
+    if(receivers):
+        #Gnerate email content
+        event_list = Event.objects.filter(date__gte=timezone.now()).filter(date_added__gt=timezone.now()-timezone.timedelta(days=7)).filter(date_added__lte=timezone.now()).order_by('date')
+        email_body = render_to_string('eventscraper/recent_events_email.html',{'event_list':event_list})
+        
+        #Send the email
+        send_mail(
+            'Weekly Update Eventscraper :)',
+            '',
+            settings.EMAIL_HOST_USER,
+            receivers,
+            fail_silently=False,
+            html_message=email_body,
+        )
        
 def scrape_events():
     #Call functions to parse the RSS feeds
