@@ -11,16 +11,15 @@ def send_mailupdate():
     #Create a list of receivers
     receivers = []
     for user in User.objects.all():
-        if user.has_perm('eventscraper.receive_emailupdates'):
+        if user.has_perm('eventscraper.receive_emailupdates') and user.email:
             receivers.append(user.email)
     
     #If there are any users that need to receive an email
     if(receivers):
-        #Gnerate email content
+        #Generate email content
         event_list = Event.objects.filter(date__gte=timezone.now()).filter(date_added__gt=timezone.now()-timezone.timedelta(days=7)).filter(date_added__lte=timezone.now()).order_by('date')
         email_body = render_to_string('eventscraper/recent_events_email.html',{'event_list':event_list})
         
-        #Send the email
         send_mail(
             'Weekly Update Eventscraper :)',
             '',
