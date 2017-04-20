@@ -10,12 +10,15 @@ LOGIN_REDIRECT_URL =  'mainpage:index'
 LOGIN_URL = 'login'
 
 CRONJOBS = [
-('*/1440 * * * *', 'eventscraper.scripts.scrape_events')
+    ('0 19 * * *', 'eventscraper.scripts.scrape_events'),  #Every day at 19:00h
+
+    ('0 20 * * 0', 'eventscraper.scripts.send_mailupdate') #Every sunday at 20:00h
 ]
 
 TIME_ZONE = 'Europe/Amsterdam'
 
 STATIC_URL = '/static/'
+STATIC_ROOT = "/var/www/applicationportal/application_portal/static/"
 
 LOGIN_REDIRECT_URL = '/'
         
