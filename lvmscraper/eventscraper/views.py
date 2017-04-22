@@ -4,29 +4,47 @@ from .models                    import Event
 from django.utils               import timezone
 from .scripts                   import scrape_events
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from eventscraper.forms         import SearchForm
 
-class EventListView(PermissionRequiredMixin,ListView):
+class SearchList(PermissionRequiredMixin, ListView):
+    form_class          = SearchForm
     model               = Event
-    template_name       = 'eventscraper/event_list.html'
     permission_required = ('eventscraper.view_eventscraper')
-    
     def get_context_data(self, **kwargs):
-        context = super(EventListView, self).get_context_data(**kwargs)
-        #Only show the events from today on
-        context['event_list'] = Event.objects.filter(date__gte=timezone.now()).order_by('date')
-        #Return the context
+        context = super(SearchList, self).get_context_data(**kwargs)
+        if 'action' in self.request.GET and self.request.GET['action'] == 'process_form':
+            context['form'] = self.form_class(self.request.GET)
+        else:
+            context['form'] = self.form_class()
         return context
         
-class RecentlyAddedEventsView(ListView):
-    model               = Event
-    template_name       = 'eventscraper/recent_events_list.html'
-    permission_required = ('eventscraper.view_eventscraper')
+class EventListView(SearchList):
+    template_name = 'eventscraper/event_list.html'
     
-    def get_context_data(self, **kwargs):
-        context = super(RecentlyAddedEventsView, self).get_context_data(**kwargs)
-        #Only show the events from today on which were added last week
-        context['event_list'] = Event.objects.filter(date__gte=timezone.now()).filter(date_added__gt=timezone.now()-timezone.timedelta(days=7)).filter(date_added__lte=timezone.now()).order_by('-date_added','date')
-        return context
+    def get_queryset(self):
+        event_set = Event.objects.filter(date__gte=timezone.now()).order_by('date')
+        if 'action' in self.request.GET and self.request.GET['action'] == 'process_form':
+            form = self.form_class(self.request.GET)
+            if form.is_valid():
+                search_word = form.cleaned_data['search_word']
+                #Filtering of the table based on the input from the search form
+                if search_word:
+                    return event_set.filter(title__icontains=search_word)
+        return event_set
+      
+class RecentlyAddedEventsView(SearchList):
+    template_name = 'eventscraper/recent_events_list.html'
+
+    def get_queryset(self):
+        event_set = Event.objects.filter(date__gte=timezone.now()).filter(date_added__gt=timezone.now()-timezone.timedelta(days=7)).filter(date_added__lte=timezone.now()).order_by('-date_added','date')
+        if 'action' in self.request.GET and self.request.GET['action'] == 'process_form':
+            form = self.form_class(self.request.GET)
+            if form.is_valid():
+                search_word = form.cleaned_data['search_word']
+                #Filtering of the table based on the input from the search form
+                if search_word:
+                    return event_set.filter(title__icontains=search_word)
+        return event_set
 
 class VenueView(PermissionRequiredMixin,ListView):
     model               = Event
