@@ -9,3 +9,4 @@ from .Arena      import ArenaLoader
 from .LuxorLive  import LuxorLiveLoader
 from .Gelredome  import GelredomeLoader
 from .Steck      import SteckLoader
+from .Carre      import CarreLoader

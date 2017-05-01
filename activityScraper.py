@@ -9,32 +9,35 @@ from Venues.Arena       import ArenaLoader
 from Venues.LuxorLive   import LuxorLiveLoader
 from Venues.Gelredome   import GelredomeLoader
 from Venues.Steck       import SteckLoader
+from Venues.Carre       import CarreLoader
 
 #Call functions to parse the RSS feeds
-Boerderij_container  = BoerderijLoader()
-AFAS_container       = AFASLiveLoader()
-paard_container      = PaardLoader()
-paradiso_container   = ParadisoLoader()
-ziggodome_container  = ZiggoDomeLoader()
-Tilburg013_container = Tilburg013Loader()
-melkweg_container    = MelkwegLoader()
-arena_container      = ArenaLoader()
-luxorlive_container  = LuxorLiveLoader()
-gelredome_container  = GelredomeLoader()
-steck_container      = SteckLoader()
+# Boerderij_container  = BoerderijLoader()
+# AFAS_container       = AFASLiveLoader()
+# paard_container      = PaardLoader()
+# paradiso_container   = ParadisoLoader()
+# ziggodome_container  = ZiggoDomeLoader()
+# Tilburg013_container = Tilburg013Loader()
+# melkweg_container    = MelkwegLoader()
+# arena_container      = ArenaLoader()
+# luxorlive_container  = LuxorLiveLoader()
+# gelredome_container  = GelredomeLoader()
+# steck_container      = SteckLoader()
+carre_container      = CarreLoader()
 
-Venues = [[Boerderij_container,'Boerderij'],[AFAS_container,'AFAS Live'],[paard_container,'Paard'],[paradiso_container,'Paradiso'],[ziggodome_container,'Ziggo Dome'],[Tilburg013_container,' Tilburg 013'],[melkweg_container,'Melkweg'],[arena_container,'Arena'],[luxorlive_container,'Luxor Live'],[gelredome_container,'Gelredome'],[steck_container,'STECK']]
+# Venues = [[Boerderij_container,'Boerderij'],[AFAS_container,'AFAS Live'],[paard_container,'Paard'],[paradiso_container,'Paradiso'],[ziggodome_container,'Ziggo Dome'],[Tilburg013_container,' Tilburg 013'],[melkweg_container,'Melkweg'],[arena_container,'Arena'],[luxorlive_container,'Luxor Live'],[gelredome_container,'Gelredome'],[steck_container,'STECK']]
+print(carre_container)
 
 #print numbers
-print("Boerderij: %s, Paard: %s, Paradiso: %s, ZiggoDome: %s, 013: %s, Melkweg: %s, Arena: %s, LuxorLive: %s, Gelredome: %s, Steck: %s" % (len(Boerderij_container),len(paard_container), len(paradiso_container), len(ziggodome_container), len(Tilburg013_container), len(melkweg_container), len(arena_container), len(luxorlive_container), len(gelredome_container), len(steck_container)))
+# print("Boerderij: %s, Paard: %s, Paradiso: %s, ZiggoDome: %s, 013: %s, Melkweg: %s, Arena: %s, LuxorLive: %s, Gelredome: %s, Steck: %s" % (len(Boerderij_container),len(paard_container), len(paradiso_container), len(ziggodome_container), len(Tilburg013_container), len(melkweg_container), len(arena_container), len(luxorlive_container), len(gelredome_container), len(steck_container)))
 
-#Write to CSV
-import csv
-with open('events.csv', 'w', newline='') as csvfile:
-    writer = csv.writer(csvfile)
-    writer.writerow(['Venue', 'Title', 'Date', 'Time', 'URL'])
-    #Loop over the venues
-    for venue in Venues:
-        #Loop over the entries
-        for entry in venue[0]:
-            writer.writerow([venue[1],entry[0],entry[1],entry[2],entry[3]])
+# #Write to CSV
+# import csv
+# with open('events.csv', 'w', newline='') as csvfile:
+    # writer = csv.writer(csvfile)
+    # writer.writerow(['Venue', 'Title', 'Date', 'Time', 'URL'])
+    # #Loop over the venues
+    # for venue in Venues:
+        # #Loop over the entries
+        # for entry in venue[0]:
+            # writer.writerow([venue[1],entry[0],entry[1],entry[2],entry[3]])

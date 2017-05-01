@@ -42,8 +42,9 @@ def scrape_events():
     luxorlive_container  = venues.LuxorLiveLoader()
     gelredome_container  = venues.GelredomeLoader()
     steck_container      = venues.SteckLoader()
+    carre_container      = venues.CarreLoader()
     
-    Venues = [[Boerderij_container,'Boerderij'],[AFAS_container,'AFAS Live'],[paard_container,'Paard'],[paradiso_container,'Paradiso'],[ziggodome_container,'Ziggo Dome'],[Tilburg013_container,' Tilburg 013'],[melkweg_container,'Melkweg'],[arena_container,'Arena'],[luxorlive_container,'Luxor Live'],[gelredome_container,'Gelredome'],[steck_container,'STECK']]
+    Venues = [[Boerderij_container,'Boerderij'],[AFAS_container,'AFAS Live'],[paard_container,'Paard'],[paradiso_container,'Paradiso'],[ziggodome_container,'Ziggo Dome'],[Tilburg013_container,' Tilburg 013'],[melkweg_container,'Melkweg'],[arena_container,'Arena'],[luxorlive_container,'Luxor Live'],[gelredome_container,'Gelredome'],[steck_container,'STECK'],[carre_container,'Carré']]
 
     for venue in Venues:
         #Loop over the entries
@@ -51,8 +52,9 @@ def scrape_events():
             #Check if the url already exists in the database
             try:
                 event = Event.objects.get(URL=entry[3])
+                primary_key = event.pk
             except:
-                pass
+                event = None
             
             #Create a new event object in case the new data is unique
             obj, created = Event.objects.get_or_create(
@@ -65,4 +67,4 @@ def scrape_events():
             
             #The data of the event must have been updated in case a new object was created; delete the old one
             if created and event:
-                event.delete()
+                Event.objects.get(pk=primary_key)
