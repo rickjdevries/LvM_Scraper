@@ -28,43 +28,50 @@ def send_mailupdate():
             fail_silently=False,
             html_message=email_body,
         )
-       
-def scrape_events():
-    #Call functions to parse the RSS feeds
-    Boerderij_container  = venues.BoerderijLoader()
-    AFAS_container       = venues.AFASLiveLoader()
-    paard_container      = venues.PaardLoader()
-    paradiso_container   = venues.ParadisoLoader()
-    ziggodome_container  = venues.ZiggoDomeLoader()
-    Tilburg013_container = venues.Tilburg013Loader()
-    melkweg_container    = venues.MelkwegLoader()
-    arena_container      = venues.ArenaLoader()
-    luxorlive_container  = venues.LuxorLiveLoader()
-    gelredome_container  = venues.GelredomeLoader()
-    steck_container      = venues.SteckLoader()
-    carre_container      = venues.CarreLoader()
-    
-    Venues = [[Boerderij_container,'Boerderij'],[AFAS_container,'AFAS Live'],[paard_container,'Paard'],[paradiso_container,'Paradiso'],[ziggodome_container,'Ziggo Dome'],[Tilburg013_container,' Tilburg 013'],[melkweg_container,'Melkweg'],[arena_container,'Arena'],[luxorlive_container,'Luxor Live'],[gelredome_container,'Gelredome'],[steck_container,'STECK'],[carre_container,'Carré']]
 
-    for venue in Venues:
-        #Loop over the entries
-        for entry in venue[0]:
-            #Check if the url already exists in the database
-            try:
-                event = Event.objects.get(URL=entry[3])
-                primary_key = event.pk
-            except:
-                event = None
-            
-            #Create a new event object in case the new data is unique
-            obj, created = Event.objects.get_or_create(
-                venue = venue[1],
-                title = entry[0],
-                date  = entry[1],
-                time  = entry[2],
-                URL   = entry[3]
-            )
-            
-            #The data of the event must have been updated in case a new object was created; delete the old one
-            if created and event:
-                Event.objects.get(pk=primary_key)
+def store_event(entry,venue):
+    try:
+        event = Event.objects.get(URL=entry[3])
+        primary_key = event.pk
+    except:
+        event = None
+    #Create a new event object in case the new data is unique
+    obj, created = Event.objects.get_or_create(
+        venue = venue,
+        title = entry[0],
+        date  = entry[1],
+        time  = entry[2],
+        URL   = entry[3]
+    )
+    #The data of the event must have been updated in case a new object was created; delete the old one
+    if created and event:
+        Event.objects.get(pk=primary_key)
+        
+def scrape_events():
+    #Call functions to parse the RSS feeds or websites
+    for event in venues.BoerderijLoader():
+        store_event(event,'Boerderij')
+    for event in venues.AFASLiveLoader():
+        store_event(event,'AFAS Live')
+    for event in venues.PaardLoader():
+        store_event(event,'Paard')
+    for event in venues.ParadisoLoader():
+        store_event(event,'Paradiso')
+    for event in venues.ZiggoDomeLoader():
+        store_event(event,'Ziggo Dome')
+    for event in venues.Tilburg013Loader():
+        store_event(event,'Tilburg 013')
+    for event in venues.MelkwegLoader():
+        store_event(event,'Melkweg')
+    for event in venues.ArenaLoader():
+        store_event(event,'Arena')
+    for event in venues.LuxorLiveLoader():
+        store_event(event,'Luxor Live')
+    for event in venues.GelredomeLoader():
+        store_event(event,'Gelredome')    
+    for event in venues.SteckLoader():
+        store_event(event,'STECK')    
+    for event in venues.CarreLoader():
+        store_event(event,'Carré')   
+    for event in venues.TivoliLoader():
+        store_event(event,'Tivoli') 

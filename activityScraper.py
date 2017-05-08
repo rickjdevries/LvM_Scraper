@@ -10,6 +10,9 @@ from Venues.LuxorLive   import LuxorLiveLoader
 from Venues.Gelredome   import GelredomeLoader
 from Venues.Steck       import SteckLoader
 from Venues.Carre       import CarreLoader
+from Venues.Tivoli      import TivoliLoader
+
+print(TivoliLoader())
 
 #Call functions to parse the RSS feeds
 # Boerderij_container  = BoerderijLoader()
@@ -23,10 +26,10 @@ from Venues.Carre       import CarreLoader
 # luxorlive_container  = LuxorLiveLoader()
 # gelredome_container  = GelredomeLoader()
 # steck_container      = SteckLoader()
-carre_container      = CarreLoader()
+# carre_container      = CarreLoader()
 
 # Venues = [[Boerderij_container,'Boerderij'],[AFAS_container,'AFAS Live'],[paard_container,'Paard'],[paradiso_container,'Paradiso'],[ziggodome_container,'Ziggo Dome'],[Tilburg013_container,' Tilburg 013'],[melkweg_container,'Melkweg'],[arena_container,'Arena'],[luxorlive_container,'Luxor Live'],[gelredome_container,'Gelredome'],[steck_container,'STECK']]
-print(carre_container)
+# print(steck_container)
 
 #print numbers
 # print("Boerderij: %s, Paard: %s, Paradiso: %s, ZiggoDome: %s, 013: %s, Melkweg: %s, Arena: %s, LuxorLive: %s, Gelredome: %s, Steck: %s" % (len(Boerderij_container),len(paard_container), len(paradiso_container), len(ziggodome_container), len(Tilburg013_container), len(melkweg_container), len(arena_container), len(luxorlive_container), len(gelredome_container), len(steck_container)))
@@ -41,3 +44,4 @@ print(carre_container)
         # #Loop over the entries
         # for entry in venue[0]:
             # writer.writerow([venue[1],entry[0],entry[1],entry[2],entry[3]])
+           
